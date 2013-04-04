@@ -1,0 +1,5 @@
+mvn install:install-file -DlocalRepositoryPath=lib -DcreateChecksum=true -Dfile=db2jcc.jar -DgroupId=com.ibm.db2 -DartifactId=db2jcc -Dversion=3.8.47 -Dpackaging=jar 
+
+mvn install:install-file -DlocalRepositoryPath=lib -DcreateChecksum=true -Dfile=db2jcc_license_cu.jar -DgroupId=com.ibm.db2 -DartifactId=db2jcc_license_cu -Dversion=3.8.47 -Dpackaging=jar
+
+mvn install:install-file -DlocalRepositoryPath=lib -DcreateChecksum=true -Dfile=db2jcc_javax.jar -DgroupId=com.ibm.db2 -DartifactId=db2jcc_javax -Dversion=3.8.47 -Dpackaging=jar

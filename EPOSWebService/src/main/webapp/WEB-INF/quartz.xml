@@ -1,0 +1,48 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="healthCheckBatch" class="com.myer.eposwebservice.batch.HealthCheckBatch" />
+
+	<!-- Spring Quartz -->
+	<bean name="healthCheckJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+
+		<property name="jobClass" value="com.myer.eposwebservice.batch.HealthCheckJob" />
+
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="healthCheckBatch" value-ref="healthCheckBatch" />
+			</map>
+		</property>
+
+	</bean>
+
+	<!-- <bean id="runMeJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> 
+		<property name="targetObject" ref="runMeTask" /> <property name="targetMethod" 
+		value="printMe" /> </bean> -->
+
+	<!-- Cron Trigger, run every 5 seconds -->
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+
+		<property name="jobDetail" ref="healthCheckJob" />
+		<property name="cronExpression" value="* * * * * ?" />
+
+	</bean>
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+				<ref bean="healthCheckJob" />
+			</list>
+		</property>
+
+		<property name="triggers">
+			<list>
+				<ref bean="cronTrigger" />
+			</list>
+		</property>
+	</bean>
+
+</beans>
